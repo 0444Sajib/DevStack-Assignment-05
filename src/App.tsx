@@ -50,6 +50,11 @@ function App() {
     );
   };
 
+  // Remove all technologies from stack
+  const removeAll = () => {
+    setStack([]);
+  };
+
   return (
     <>
       <Navbar />
@@ -96,6 +101,7 @@ function App() {
               <StackSidebar
                 stack={stack}
                 onRemove={removeFromStack}
+                onRemoveAll={removeAll}
               />
 
             </div>
