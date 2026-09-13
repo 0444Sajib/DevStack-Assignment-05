@@ -2,9 +2,13 @@ import type { Technology } from "../types";
 
 type TechnologyCardProps = {
   technology: Technology;
+  onAdd: (technology: Technology) => void;
 };
 
-function TechnologyCard({ technology }: TechnologyCardProps) {
+function TechnologyCard({
+  technology,
+  onAdd,
+}: TechnologyCardProps) {
   return (
     <div className="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm">
 
@@ -53,10 +57,11 @@ function TechnologyCard({ technology }: TechnologyCardProps) {
 
       {/* Add to Stack Button */}
       <button
-        className="w-full h-9 rounded-lg bg-[#0A0F1D] text-white text-sm font-medium"
-      >
-        Add to Stack
-      </button>
+  onClick={() => onAdd(technology)}
+  className="w-full h-9 rounded-lg bg-[#0A0F1D] text-white text-sm font-medium"
+>
+  Add to Stack
+</button>
 
     </div>
   );
