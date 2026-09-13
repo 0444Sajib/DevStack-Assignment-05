@@ -3,18 +3,19 @@ import type { Technology } from "../types";
 type TechnologyCardProps = {
   technology: Technology;
   onAdd: (technology: Technology) => void;
+  isAdded: boolean;
 };
 
 function TechnologyCard({
   technology,
   onAdd,
+  isAdded,
 }: TechnologyCardProps) {
   return (
     <div className="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm">
 
       {/* Top Part */}
       <div className="flex items-center justify-between">
-
         <img
           src={technology.icon}
           alt={technology.name}
@@ -24,7 +25,6 @@ function TechnologyCard({
         <span className="px-3 py-1 rounded-full text-sm bg-violet-100 text-violet-600">
           {technology.badge}
         </span>
-
       </div>
 
       {/* Technology Name */}
@@ -39,7 +39,6 @@ function TechnologyCard({
 
       {/* Category & Difficulty */}
       <div className="flex justify-between mt-5 text-sm">
-
         <span className="text-gray-500">
           {technology.category}
         </span>
@@ -47,7 +46,6 @@ function TechnologyCard({
         <span className="text-gray-500">
           {technology.difficulty}
         </span>
-
       </div>
 
       {/* Rating */}
@@ -57,11 +55,16 @@ function TechnologyCard({
 
       {/* Add to Stack Button */}
       <button
-  onClick={() => onAdd(technology)}
-  className="w-full h-9 rounded-lg bg-[#0A0F1D] text-white text-sm font-medium"
->
-  Add to Stack
-</button>
+        onClick={() => onAdd(technology)}
+        disabled={isAdded}
+        className={`w-full h-9 rounded-lg text-white text-sm font-medium ${
+          isAdded
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-[#0A0F1D] hover:bg-gray-800"
+        }`}
+      >
+        {isAdded ? "✓ Added to Stack" : "Add to Stack"}
+      </button>
 
     </div>
   );

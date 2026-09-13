@@ -7,6 +7,9 @@ import StackSidebar from "./components/StackSidebar";
 
 import type { Technology } from "./types";
 import Footer from "./components/Footer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 function App() {
   const [technologies, setTechnologies] = useState<Technology[]>([]);
@@ -31,30 +34,50 @@ function App() {
     loadTechnologies();
   }, []);
 
+  
   // Add technology to stack
-  const addToStack = (technology: Technology) => {
-    const alreadyAdded = stack.some(
-      (item) => item.id === technology.id
-    );
+const addToStack = (technology: Technology) => {
+  const alreadyAdded = stack.some(
+    (item) => item.id === technology.id
+  );
 
-    if (alreadyAdded) {
-      return;
-    }
+  if (alreadyAdded) {
+    toast.warning(`${technology.name} is already in your stack!`);
+    return;
+  }
 
-    setStack([...stack, technology]);
-  };
+  setStack([...stack, technology]);
 
+  toast.success(`${technology.name} added to your stack!`);
+};
+
+  
   // Remove technology from stack
-  const removeFromStack = (id: string) => {
-    setStack(
-      stack.filter((technology) => technology.id !== id)
-    );
-  };
+const removeFromStack = (id: string) => {
+  const technology = stack.find(
+    (item) => item.id === id
+  );
+
+  setStack(
+    stack.filter((technology) => technology.id !== id)
+  );
+
+  if (technology) {
+    toast.info(`${technology.name} removed from your stack.`);
+  }
+};
 
   // Remove all technologies from stack
   const removeAll = () => {
-    setStack([]);
-  };
+  if (stack.length === 0) {
+    toast.warning("Your stack is already empty.");
+    return;
+  }
+
+  setStack([]);
+
+  toast.success("All technologies removed from your stack.");
+};
 
   return (
     <>
@@ -86,17 +109,18 @@ function App() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
               {/* Technology Cards */}
-              <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-5">
+<div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-5">
 
-                {technologies.map((technology) => (
-                  <TechnologyCard
-                    key={technology.id}
-                    technology={technology}
-                    onAdd={addToStack}
-                  />
-                ))}
+  {technologies.map((technology) => (
+    <TechnologyCard
+      key={technology.id}
+      technology={technology}
+      onAdd={addToStack}
+      isAdded={stack.some((item) => item.id === technology.id)}
+    />
+  ))}
 
-              </div>
+</div>
 
               {/* Your Stack */}
               <StackSidebar
@@ -111,7 +135,10 @@ function App() {
 
         </div>
       </section>
+
       <Footer/>
+
+      <ToastContainer />
     </>
   );
 }
