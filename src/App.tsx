@@ -86,7 +86,7 @@ const removeFromStack = (id: string) => {
       <Hero />
 
       {/* Technologies Section */}
-      <section id="technologies" className="py-14 bg-gray-50">
+      <section id="technologies" className="pt-0 pb-14 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4">
 
           {/* Section Title */}
