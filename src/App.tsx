@@ -6,6 +6,7 @@ import TechnologyCard from "./components/TechnologyCard";
 import StackSidebar from "./components/StackSidebar";
 
 import type { Technology } from "./types";
+import Footer from "./components/Footer";
 
 function App() {
   const [technologies, setTechnologies] = useState<Technology[]>([]);
@@ -103,12 +104,14 @@ function App() {
                 onRemove={removeFromStack}
                 onRemoveAll={removeAll}
               />
+               
 
             </div>
           )}
 
         </div>
       </section>
+      <Footer/>
     </>
   );
 }
